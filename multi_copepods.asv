@@ -96,7 +96,7 @@ ylabel("depth")
 xlabel("Fitness")
 title("fitness")
 grid on
-%% Contour plots of m, g, w, and light
+%% Cony
 figure()
 contourf(t,-z,m0)
 c = colorbar;
@@ -155,9 +155,16 @@ title("Seasonal forcing on the light intensity")
 grid on
 
 %% AGENT BASED MODEL
+% Copepods
 
+%Z(t)=-30
+%g0=p.b*Ps(t,-Z(t))/(1+p.b*p.h*Z(t));
+%m0=p.kl*I(-Z(t));
+%w0=g0/m0;
+%dwdz(1)=diff(w0)
+%Z(1)=-30;
 
-% amount of agents (copepods)
+%%
 Copepods=5
 
 
@@ -195,7 +202,7 @@ end
 end
 end
 
-%5) plot Plankton with copepods movement
+%5) plot Plankton
 figure() %plot
 contourf(t,-z,Ps')
 c=colorbar;
