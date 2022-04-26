@@ -27,17 +27,20 @@ p.Hn=0.04; %Half satuaration nutrients growth [mmol N/(m^3)]
 p.tau=0.1; %1/d  remineralization
 p.w=5; %sinking speed of detritus m/d
 
-% New parameters
-p.r=1/3;
-p.c=10;
-p.b=0.1e-9;
-p.Cmax=1.1;
-p.kl=0.005;
-p.m0=0.2
+% Parameters for project 2
+p.r=1/3; %Randomization parameter [unitless]
+p.c=10; %coefficient expressing the magnitude of 
+%impact the fitness gradient has on movement [unitless]
+p.b=0.1e-8; %Encounter rate [1/day]
+p.Cmax=1.1; %max comsumption [(cell/m^3)/day]
+p.eps=0.9; %consumption efficiency [1/(cell/m^3)]
+p.m0=0.2; %Baseline mortality [1/day]
+p.kl=0.008; %predation pr light pr day [1/((mumol photons/(m^2s))*day)]
 
-p.M=p.Cmax*0.1
 
-p.DeltaT=1
+p.M=p.Cmax*0.1; %Matabolic rate [1/day]
+
+p.DeltaT=1; %time step [day]
 
 
 %2) tThe grid
@@ -86,19 +89,19 @@ I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g0=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
-m0=p.kl.*I+p.m0;
-w0=g0./m0';
+g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
+m1=p.kl.*I+p.m;
+w1=g1./m1';
 
 figure()
-contourf(t,-z,w0','Color','#77AC30','Linewidth',2)
+contourf(t,-z,w1','Color','#77AC30','Linewidth',2)
 ylabel("depth")
 xlabel("Fitness")
 title("fitness")
 grid on
 %% Contour plots of m, g, w, and light
 figure()
-contourf(t,-z,m0)
+contourf(t,-z,m1)
 c = colorbar;
 c.Label.String = 'Mortality';
 ylabel("Depth [m]")
@@ -112,7 +115,7 @@ title("Mortality")
 grid on
 
 figure()
-contourf(t,-z,g0')
+contourf(t,-z,g1')
 c = colorbar;
 c.Label.String = 'Growth';
 ylabel("Depth [m]")
@@ -126,7 +129,7 @@ title("Growth")
 grid on
 
 figure()
-contourf(t,-z,w0')
+contourf(t,-z,w1')
 c = colorbar;
 c.Label.String = 'Fitness';
 ylabel("Depth [m]")
@@ -158,14 +161,14 @@ grid on
 
 
 % amount of agents (copepods)
-Copepods=5
+Copepods=3
 
 
 Z=ones(1,Copepods)
 for j=1:length(Z)
 
 Z(1,j)=(-100+100*rand())
-%%
+
 for i=1:tt
 %     
 pos(i,j)=round(-Z(i,j));
@@ -209,5 +212,20 @@ title("Distribution of Phytoplankton")
 grid on
 
 %%
+figure()
+contourf(t,-z,w1')
+c = colorbar;
+c.Label.String = 'Fitness';
+ylabel("Depth [m]")
+hold on
+plot(t,Z','Linewidth',1);
+hold off
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Movement of 3 copepods")
+grid on
 
 "done"

@@ -86,9 +86,9 @@ I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g0=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
-m0=p.kl.*I+p.m0;
-w0=g0./m0';
+g=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
+m=p.kl.*I+p.m;
+w=g0./m0';
 
 figure()
 contourf(t,-z,w0','Color','#77AC30','Linewidth',2)
@@ -96,7 +96,7 @@ ylabel("depth")
 xlabel("Fitness")
 title("fitness")
 grid on
-%% Cony
+%% Contour plots of m, g, w, and light
 figure()
 contourf(t,-z,m0)
 c = colorbar;
@@ -155,24 +155,17 @@ title("Seasonal forcing on the light intensity")
 grid on
 
 %% AGENT BASED MODEL
-% Copepods
 
-%Z(t)=-30
-%g0=p.b*Ps(t,-Z(t))/(1+p.b*p.h*Z(t));
-%m0=p.kl*I(-Z(t));
-%w0=g0/m0;
-%dwdz(1)=diff(w0)
-%Z(1)=-30;
 
-%%
-Copepods=5
+% amount of agents (copepods)
+Copepods=3
 
 
 Z=ones(1,Copepods)
 for j=1:length(Z)
 
 Z(1,j)=(-100+100*rand())
-%%
+
 for i=1:tt
 %     
 pos(i,j)=round(-Z(i,j));
@@ -202,7 +195,7 @@ end
 end
 end
 
-%5) plot Plankton
+%5) plot Plankton with copepods movement
 figure() %plot
 contourf(t,-z,Ps')
 c=colorbar;
@@ -216,5 +209,18 @@ title("Distribution of Phytoplankton")
 grid on
 
 %%
+figure()
+contourf(t,-z,w0')
+c = colorbar;
+c.Label.String = 'Fitness';
+ylabel("Depth [m]")
+%xlabel("Time [days]")
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Fitness")
+grid on
 
 "done"

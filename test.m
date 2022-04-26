@@ -27,17 +27,20 @@ p.Hn=0.04; %Half satuaration nutrients growth [mmol N/(m^3)]
 p.tau=0.1; %1/d  remineralization
 p.w=5; %sinking speed of detritus m/d
 
-% New parameters
-p.r=1/3;
-p.c=10;
-p.b=0.1e-8;
-p.Cmax=1.1;
-p.kl=0.05;
-p.m0=0.2
+% Parameters for project 2
+p.r=1/3; %Randomization parameter [unitless]
+p.c=10; %coefficient expressing the magnitude of 
+%impact the fitness gradient has on movement [unitless]
+p.b=0.1e-8; %Encounter rate [1/day]
+p.Cmax=1.1; %max comsumption [(cell/m^3)/day]
+p.eps=0.9; %consumption efficiency [1/(cell/m^3)]
+p.m0=0.2; %Baseline mortality [1/day]
+p.kl=0.008; %predation pr light pr day [1/((mumol photons/(m^2s))*day)]
 
-p.M=p.Cmax*0.1
 
-p.DeltaT=1
+p.M=p.Cmax*0.1; %Matabolic rate [1/day]
+
+p.DeltaT=1; %time step [day]
 
 
 %2) tThe grid
@@ -66,9 +69,9 @@ tt=3*365
 t1=[0:tt];
 
 %4) Run the model
-%[t,y]=ode45(@func_diff,t1,y,[],p);
+[t,y]=ode45(@func_diff,t1,y,[],p);
 % Seasonal
-[t,y]=ode45(@func_diff_season,t1,y,[],p);
+%[t,y]=ode45(@func_diff_season,t1,y,[],p);
 
 
 
@@ -80,43 +83,32 @@ Ds=y(:,2*p.n+1:end);
 %% CALCULATE LIGHT
 
 %Calculate light
-%I=func_light(z,Ps(end,:),p);
+I=func_light(z,Ps(end,:),p);
 %Season
-I=func_light_s(z,t,Ps(end,:),p);
+%I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g0=p.b*Ps(end,:)./(p.b*Ps(end,:)+p.Cmax).*p.Cmax-p.M;
+g0=p.eps*p.b*Ps(end,:)./(p.b*Ps(end,:)+p.Cmax).*p.Cmax-p.M;
 m0=p.kl.*I+p.m0;
 w0=g0./m0';
 
 figure()
-plot(w0,-z,'Color','#77AC30','Linewidth',2)
-ylabel("depth")
-xlabel("Fitness")
-title("fitness")
+plot(w0,-z,'Color','#0072BD','Linewidth',2)
+hold on
+plot(g0,-z,'Color','#77AC30','Linewidth',2)
+plot(m0,-z,'Color','#A2142F','Linewidth',2)
+hold off
+ylabel("Depth")
+xlabel("1/day")
+title("Fitness based on growth rate and mortality")
+legend("Fitness","Growth rate","Mortality")
 grid on
 
-%%
-figure()
-plot(Ps(end,:),-z,'Color','#77AC30','Linewidth',2)
-ylabel("Depth [m]")
-xlabel("Concentration PP [cell/m^3]")
-title("Steady State Solution of Phytoplankton")
-grid on
 %% AGENT BASED MODEL
 % Copepods
 
-%Z(t)=-30
-%g0=p.b*Ps(t,-Z(t))/(1+p.b*p.h*Z(t));
-%m0=p.kl*I(-Z(t));
-%w0=g0/m0;
-%dwdz(1)=diff(w0)
-%Z(1)=-30;
-
-%%
-
-Z(1)=-30;
+Z(1)=(-100+100*rand());
 for i=1:tt
 %     
 pos(i)=round(-Z(i));
