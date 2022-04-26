@@ -28,11 +28,14 @@ p.tau=0.1; %1/d  remineralization
 p.w=5; %sinking speed of detritus m/d
 
 % New parameters
-p.r=1/3
-p.c=0.5
-p.b=0.5
-p.h=0.5
-p.kl=0.5
+p.r=1/3;
+p.c=10;
+p.b=0.1e-8;
+p.Cmax=1.1;
+p.kl=0.05;
+p.m0=0.2
+
+p.M=p.Cmax*0.1
 
 p.DeltaT=1
 
@@ -63,7 +66,11 @@ tt=3*365
 t1=[0:tt];
 
 %4) Run the model
-[t,y]=ode45(@func_diff,t1,y,[],p);
+%[t,y]=ode45(@func_diff,t1,y,[],p);
+% Seasonal
+[t,y]=ode45(@func_diff_season,t1,y,[],p);
+
+
 
 %Splits the outpuy into PP, N and D:
 Ps=y(:,1:p.n);
@@ -73,36 +80,73 @@ Ds=y(:,2*p.n+1:end);
 %% CALCULATE LIGHT
 
 %Calculate light
-I=func_light(z,Ps(end,:),p);
+%I=func_light(z,Ps(end,:),p);
+%Season
+I=func_light_s(z,t,Ps(end,:),p);
 
+
+%% Growth rate, Mortality and fitness
+g0=p.b*Ps(end,:)./(p.b*Ps(end,:)+p.Cmax).*p.Cmax-p.M;
+m0=p.kl.*I+p.m0;
+w0=g0./m0';
+
+figure()
+plot(w0,-z,'Color','#77AC30','Linewidth',2)
+ylabel("depth")
+xlabel("Fitness")
+title("fitness")
+grid on
+
+%%
+figure()
+plot(Ps(end,:),-z,'Color','#77AC30','Linewidth',2)
+ylabel("Depth [m]")
+xlabel("Concentration PP [cell/m^3]")
+title("Steady State Solution of Phytoplankton")
+grid on
 %% AGENT BASED MODEL
 % Copepods
 
-g0=p.b*Ps(t,z(t))/(1+p.b*p.h*z(t)
-m0=p.kl*I(t+1,z(t))
-w0=g0/m0
-dwdz=
+%Z(t)=-30
+%g0=p.b*Ps(t,-Z(t))/(1+p.b*p.h*Z(t));
+%m0=p.kl*I(-Z(t));
+%w0=g0/m0;
+%dwdz(1)=diff(w0)
+%Z(1)=-30;
+
+%%
+
 Z(1)=-30;
-
 for i=1:tt
-Z(i+1)=Z(i)+(-1+2*rand())*(2*p.r^(-1)*p.D*p.DeltaT)^(1/2)+p.c*dwdz*p.DeltaT;
-if Z(i+1)>0;
-    Z(i+1)=0;
+%     
+pos(i)=round(-Z(i));
+Dpos(i)=pos(i)+1;
+
+g0=p.b*Ps(i,pos(i))./(p.b*Ps(i,pos(i))+p.Cmax).*p.Cmax-p.M;
+m0=p.kl.*I(pos(i))+p.m0;
+w0=g0./m0';
+
+% 
+g0d=p.b*Ps(i,Dpos(i))./(p.b*Ps(i,Dpos(i))+p.Cmax).*p.Cmax-p.M;
+m0d=p.kl.*I(Dpos(i))+p.m0;
+w0d=g0d./m0d';
+
+dwdz(i)=(w0d-w0)/p.DeltaT;
+
+    
+    
+Z(i+1)=Z(i)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.1*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
+if Z(i+1)>-1;
+    Z(i+1)=-1;
 end
-if Z(i+1)<100;
-    Z(i+1)=100;
+if Z(i+1)<-99;
+    Z(i+1)=-99;
 end
+
 end
 
-%+p.c*dwdz*p.DeltaT
 
-%g=p.b*Ps(t+1,z(t+1))/(1+p.b*p.h*z(t+1)
-
-%m=p.kl*I(t+1,z(t+1))
-
-%w=g/m 
-
-%% 5) plot Plankton
+%5) plot Plankton
 figure() %plot
 contourf(t,-z,Ps')
 c=colorbar;

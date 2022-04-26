@@ -90,20 +90,13 @@ g0=p.b*Ps(end,:)./(p.b*Ps(end,:)+p.Cmax).*p.Cmax-p.M;
 m0=p.kl.*I+p.m0;
 w0=g0./m0';
 
-figure()
-plot(w0,-z,'Color','#77AC30','Linewidth',2)
-ylabel("depth")
-xlabel("Fitness")
-title("fitness")
-grid on
+% figure()
+% plot(w0,-z,'Color','#77AC30','Linewidth',2)
+% ylabel("depth")
+% xlabel("Fitness")
+% title("fitness")
+% grid on
 
-%%
-figure()
-plot(Ps(end,:),-z,'Color','#77AC30','Linewidth',2)
-ylabel("Depth [m]")
-xlabel("Concentration PP [cell/m^3]")
-title("Steady State Solution of Phytoplankton")
-grid on
 %% AGENT BASED MODEL
 % Copepods
 
@@ -115,6 +108,7 @@ grid on
 %Z(1)=-30;
 
 %%
+
 Z(1)=-30;
 for i=1:tt
 %     
@@ -144,13 +138,6 @@ end
 
 end
 
-%+p.c*dwdz*p.DeltaT
-
-%g=p.b*Ps(t+1,z(t+1))/(1+p.b*p.h*z(t+1)
-
-%m=p.kl*I(t+1,z(t+1))
-
-%w=g/m 
 
 %5) plot Plankton
 figure() %plot
