@@ -165,6 +165,8 @@ Copepods=3
 
 
 Z=ones(1,Copepods)
+S=ones(1,Copepods)*100
+
 for j=1:length(Z)
 
 Z(1,j)=(-100+100*rand())
@@ -185,6 +187,7 @@ w0d=g0d./m0d';
 
 dwdz(i)=(w0d-w0)/p.DeltaT;
 
+
     
     
 Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
@@ -195,9 +198,11 @@ if Z(i+1,j)<-99;
     Z(i+1,j)=-99;
 end
 
-end
-end
 
+
+end
+end
+%%
 %5) plot Plankton with copepods movement
 figure() %plot
 contourf(t,-z,Ps')
@@ -206,9 +211,12 @@ c.Label.String = 'Concentration of PP [cells/m^3]';
 hold on
 plot(t,Z','Linewidth',0.7);
 hold off
-ylabel("Depth [m]")
-xlabel("Time [days]")
-title("Distribution of Phytoplankton")
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Distribution of Phytoplankton and Copepod movement")
 grid on
 
 %%

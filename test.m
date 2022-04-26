@@ -100,9 +100,9 @@ plot(g0,-z,'Color','#77AC30','Linewidth',2)
 plot(m0,-z,'Color','#A2142F','Linewidth',2)
 hold off
 ylabel("Depth")
-xlabel("1/day")
+xlabel("[1/day],[unitless]")
 title("Fitness based on growth rate and mortality")
-legend("Fitness","Growth rate","Mortality")
+legend("Fitness[unitless]","Growth rate[1/day]","Mortality[1/day]")
 grid on
 
 %% AGENT BASED MODEL
