@@ -127,7 +127,7 @@ grid on
 
 
 % amount of agents (copepods)
-Copepods=100
+Copepods=1500
 
 
 Z=ones(1,Copepods);

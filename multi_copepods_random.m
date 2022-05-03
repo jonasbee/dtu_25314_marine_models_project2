@@ -32,7 +32,7 @@ y=[P0,N0,D0];
 
 tt=3*365;
 
-t1=[0:tt];
+t1=0:tt;
 
 %4) Run the model
 %[t,y]=ode45(@func_diff,t1,y,[],p);
@@ -124,20 +124,14 @@ grid on
 % grid on
 
 %% AGENT BASED MODEL
+% copepod's fitness based on random walk
 
 % amount of agents (copepods)
-Copepods=100
+Copepods=1500
 
 Z=ones(1,Copepods);
 S=ones(1,Copepods);
 R=zeros(1,Copepods);
-
-
-% copepod's fitness based on random walk
-
-
-% copepod's fitness based on random walk + fitness gradient
-
 
 for j=1:Copepods
 
@@ -166,7 +160,7 @@ gd=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
 md=p.kl.*I(Dpos(i,j))+p.m0;
 wd=gd./md';
 
-dwdz(i)=(wd-w)/p.DeltaT;
+% dwdz(i)=(wd-w)/p.DeltaT;
 
 % Survival chance
 S(i+1,j)=S(i,j)-m*S(i,j)*p.DeltaT;
@@ -182,7 +176,7 @@ if R(i+1,j)<0.001
 end
     
 % Movements    
-Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
+Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2);%-p.c*dwdz(i)*p.DeltaT;
 if Z(i+1,j)>-1;
     Z(i+1,j)=-1;
 end
