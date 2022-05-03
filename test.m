@@ -77,6 +77,8 @@ grid on
 % Copepods
 
 Z(1)=(-100+100*rand());
+S(1)=1
+R(1)=0
 for i=1:tt
 %     
 pos(i)=round(-Z(i));
@@ -133,5 +135,6 @@ title("Distribution of Phytoplankton")
 grid on
 
 %%
+
 
 "done"

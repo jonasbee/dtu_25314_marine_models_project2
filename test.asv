@@ -77,6 +77,8 @@ grid on
 % Copepods
 
 Z(1)=(-100+100*rand());
+S(1)=1
+R(
 for i=1:tt
 %     
 pos(i)=round(-Z(i));
@@ -93,18 +95,21 @@ w0d=g0d./m0d';
 
 dwdz(i)=(w0d-w0)/p.DeltaT;
 
+% Survival chance
 S(i+1)=S(i)-m0*S(i)*p.DeltaT;
 if S(i+1)<0.001
     S(i+1)=0;
 end
 
-
+% Reproduction output
 R(i+1)=R(i)+S(i)*g0*p.DeltaT;
 
 if R(i+1)<0.001
-    R(i+1,)=0;
+    R(i+1)=0;
 end
-    
+
+% Movements
+
 Z(i+1)=Z(i)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.1*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
 if Z(i+1)>-1;
     Z(i+1)=-1;

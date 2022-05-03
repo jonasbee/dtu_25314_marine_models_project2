@@ -8,7 +8,7 @@ clc
 % hello git
 %% 1) Parameters 
 %Call function: "call_param"
-p=call_param()
+p=call_param();
 
 %2) tThe grid
 p.dz=p.depth/p.n; %width of seciton
@@ -127,41 +127,50 @@ grid on
 
 
 % amount of agents (copepods)
-Copepods=10
+Copepods=100
 
 
 Z=ones(1,Copepods);
-S=ones(1,Copepods)*100;
+S=ones(1,Copepods);
 R=zeros(1,Copepods);
 
-for j=1:length(Z)
+for j=1:Copepods
 
 Z(1,j)=(-100+100*rand());
 
 for i=1:tt
 %     
 pos(i,j)=round(-Z(i,j));
+
+if pos(i,j)==0
+    pos(i,j)=1;
+end 
+
 Dpos(i,j)=pos(i,j)+1;
 
-g0=p.b*Ps(i,pos(i,j))./(p.b*Ps(i,pos(i,j))+p.Cmax).*p.Cmax-p.M;
-m0=p.kl.*I(pos(i,j))+p.m0;
-w0=g0./m0';
+if Dpos(i,j)==101
+    Dpos(i,j)=100;
+end
+
+g=p.b*Ps(i,pos(i,j))./(p.b*Ps(i,pos(i,j))+p.Cmax).*p.Cmax-p.M;
+m=p.kl.*I(pos(i,j))+p.m0;
+w=g./m';
 
 % 
-g0d=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
-m0d=p.kl.*I(Dpos(i,j))+p.m0;
-w0d=g0d./m0d';
+gd=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
+md=p.kl.*I(Dpos(i,j))+p.m0;
+wd=gd./md';
 
-dwdz(i)=(w0d-w0)/p.DeltaT;
+dwdz(i)=(wd-w)/p.DeltaT;
 
 % Survival chance
-S(i+1,j)=S(i,j)-m0*S(i,j)*p.DeltaT;
+S(i+1,j)=S(i,j)-m*S(i,j)*p.DeltaT;
 if S(i+1,j)<0.001
     S(i+1,j)=0;
 end
 
 % Reproduction output
-R(i+1,j)=R(i,j)+S(i,j)*g0*p.DeltaT;
+R(i+1,j)=R(i,j)+S(i,j)*g*p.DeltaT;
 
 if R(i+1,j)<0.001
     R(i+1,j)=0;
@@ -218,7 +227,7 @@ grid on
 figure()
 plot(t,S,'Linewidth',2)
 ylabel("Survival change[%]")
-xlim([0,100])
+xlim([0,100]) 
 xlabel("Time [days]")
 title("Survival")
 %legend("Fitness[unitless]","Growth rate[1/day]","Mortality[1/day]")
@@ -233,5 +242,8 @@ xlabel("Time [days]")
 title("Fitness proxy = Mass specific reproduction output")
 %legend("Fitness[unitless]","Growth rate[1/day]","Mortality[1/day]")
 grid on
+%%
+"average fitness of copepods"
+sum(R(end,:))/Copepods
 
 "done"
