@@ -160,7 +160,7 @@ gd=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
 md=p.kl.*I(Dpos(i,j))+p.m0;
 wd=gd./md';
 
-% dwdz(i)=(wd-w)/p.DeltaT;
+% dwdz(i)=(wd-w)/p.dz;;
 
 % Survival chance
 S(i+1,j)=S(i,j)-m*S(i,j)*p.DeltaT;

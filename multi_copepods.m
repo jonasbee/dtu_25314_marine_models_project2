@@ -127,7 +127,7 @@ grid on
 
 
 % amount of agents (copepods)
-Copepods=1500
+Copepods=1
 
 
 Z=ones(1,Copepods);
@@ -161,7 +161,8 @@ gd=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
 md=p.kl.*I(Dpos(i,j))+p.m0;
 wd=gd./md';
 
-dwdz(i)=(wd-w)/p.DeltaT;
+dwdz(i)=(wd-w)/p.dz;
+%dwdz=(wd-w)/p.dz;
 
 % Survival chance
 S(i+1,j)=S(i,j)-m*S(i,j)*p.DeltaT;
@@ -178,10 +179,10 @@ end
     
 % Movements    
 Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
-if Z(i+1,j)>-1;
+if Z(i+1,j)>-1
     Z(i+1,j)=-1;
 end
-if Z(i+1,j)<-99;
+if Z(i+1,j)<-99
     Z(i+1,j)=-99;
 end
 
