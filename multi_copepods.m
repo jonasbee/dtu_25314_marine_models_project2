@@ -55,7 +55,7 @@ I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
+g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.eps*p.Cmax-p.M;
 m1=p.kl.*I+p.m;
 w1=g1./m1';
 
@@ -192,7 +192,7 @@ end
 %%
 %5) plot Plankton with copepods movement
 figure() %plot
-contourf(t,-z,Ps')
+contourf(t,-z,I)
 c=colorbar;
 c.Label.String = 'Concentration of PP [cells/m^3]';
 hold on
