@@ -32,7 +32,7 @@ y=[P0,N0,D0];
 
 tt=3*365;
 
-t1=[0:tt];
+t1=0:tt;
 
 %4) Run the model
 %[t,y]=ode45(@func_diff,t1,y,[],p);
@@ -55,7 +55,7 @@ I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.eps*p.Cmax-p.M;
+g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
 m1=p.kl.*I+p.m;
 w1=g1./m1';
 
@@ -124,11 +124,10 @@ grid on
 % grid on
 
 %% AGENT BASED MODEL
-
+% copepod's fitness based on random walk
 
 % amount of agents (copepods)
-Copepods=1
-
+Copepods=1500
 
 Z=ones(1,Copepods);
 S=ones(1,Copepods);
@@ -161,8 +160,7 @@ gd=p.b*Ps(i,Dpos(i,j))./(p.b*Ps(i,Dpos(i,j))+p.Cmax).*p.Cmax-p.M;
 md=p.kl.*I(Dpos(i,j))+p.m0;
 wd=gd./md';
 
-dwdz(i)=(wd-w)/p.dz;
-%dwdz=(wd-w)/p.dz;
+% dwdz(i)=(wd-w)/p.dz;;
 
 % Survival chance
 S(i+1,j)=S(i,j)-m*S(i,j)*p.DeltaT;
@@ -178,11 +176,11 @@ if R(i+1,j)<0.001
 end
     
 % Movements    
-Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
-if Z(i+1,j)>-1
+Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2);%-p.c*dwdz(i)*p.DeltaT;
+if Z(i+1,j)>-1;
     Z(i+1,j)=-1;
 end
-if Z(i+1,j)<-99
+if Z(i+1,j)<-99;
     Z(i+1,j)=-99;
 end
 
@@ -193,7 +191,7 @@ end
 %%
 %5) plot Plankton with copepods movement
 figure() %plot
-contourf(t,-z,I)
+contourf(t,-z,Ps')
 c=colorbar;
 c.Label.String = 'Concentration of PP [cells/m^3]';
 hold on
