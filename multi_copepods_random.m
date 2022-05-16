@@ -55,7 +55,7 @@ I=func_light_s(z,t,Ps(end,:),p);
 
 
 %% Growth rate, Mortality and fitness
-g1=p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
+g1=p.eps*p.b*Ps./(p.b*Ps+p.Cmax).*p.Cmax-p.M;
 m1=p.kl.*I+p.m;
 w1=g1./m1';
 
@@ -127,7 +127,7 @@ grid on
 % copepod's fitness based on random walk
 
 % amount of agents (copepods)
-Copepods=1500
+Copepods=5
 
 Z=ones(1,Copepods);
 S=ones(1,Copepods);
@@ -215,11 +215,11 @@ hold on
 plot(t,Z','Linewidth',1);
 hold off
 xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
-xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring'})
 ax = gca;
 ax.TickLength = [0.02,0]; % Make tick marks longer.
 ax.LineWidth = 1; % Make tick marks thicker.
-title("Movement of 3 copepods")
+title("Random movement of 5 copepods")
 grid on
 
 %%
