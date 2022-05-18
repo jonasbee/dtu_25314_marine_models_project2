@@ -66,47 +66,47 @@ xlabel("Fitness")
 title("fitness")
 grid on
 %% Contour plots of m, g, w, and light
-% figure()
-% contourf(t,-z,m1)
-% c = colorbar;
-% c.Label.String = 'Mortality';
-% ylabel("Depth [m]")
-% %xlabel("Time [days]")
-% xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
-% xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
-% ax = gca;
-% ax.TickLength = [0.02,0]; % Make tick marks longer.
-% ax.LineWidth = 1; % Make tick marks thicker.
-% title("Mortality")
-% grid on
-% 
-% figure()
-% contourf(t,-z,g1')
-% c = colorbar;
-% c.Label.String = 'Growth';
-% ylabel("Depth [m]")
-% %xlabel("Time [days]")
-% xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
-% xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
-% ax = gca;
-% ax.TickLength = [0.02,0]; % Make tick marks longer.
-% ax.LineWidth = 1; % Make tick marks thicker.
-% title("Growth")
-% grid on
-% 
-% figure()
-% contourf(t,-z,w1')
-% c = colorbar;
-% c.Label.String = 'Fitness';
-% ylabel("Depth [m]")
-% %xlabel("Time [days]")
-% xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
-% xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter'})
-% ax = gca;
-% ax.TickLength = [0.02,0]; % Make tick marks longer.
-% ax.LineWidth = 1; % Make tick marks thicker.
-% title("Fitness")
-% grid on
+figure()
+contourf(t,-z,m1)
+c = colorbar;
+c.Label.String = 'Mortality [1/day]';
+ylabel("Depth [m]")
+%xlabel("Time [days]")
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Mortality")
+grid on
+
+figure()
+contourf(t,-z,g1')
+c = colorbar;
+c.Label.String = 'Growth [1/day]';
+ylabel("Depth [m]")
+%xlabel("Time [days]")
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Growth")
+grid on
+
+figure()
+contourf(t,-z,w1')
+c = colorbar;
+c.Label.String = 'Fitness proxy';
+ylabel("Depth [m]")
+%xlabel("Time [days]")
+xticks([0 365/4 365/2 365*3/4 365 365+365/4 365+365/2 365+365*3/4 365*2 2*365+365/4 2*365+365/2 2*365+365*3/4 365*3])
+xticklabels({'Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring','Summer','Fall','Winter','Spring'})
+ax = gca;
+ax.TickLength = [0.02,0]; % Make tick marks longer.
+ax.LineWidth = 1; % Make tick marks thicker.
+title("Fitness proxy")
+grid on
 % 
 % %5) plot light
 % figure() %plot
