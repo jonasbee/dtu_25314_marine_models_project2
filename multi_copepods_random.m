@@ -64,7 +64,7 @@ w1=g1./m1';
 
 % amount of agents (copepods)
 % Choose a number :)
-Copepods=5
+Copepods=1500
 
 Z=ones(1,Copepods);
 S=ones(1,Copepods);
@@ -90,7 +90,7 @@ if Dpos(i,j)==101
 end
 
 % Growth and mortality to use in S and R.
-g=p.b*Ps(i,pos(i,j))./(p.b*Ps(i,pos(i,j))+p.Cmax).*p.Cmax-p.M;
+g=p.b*Ps(i,pos(i,j))./(p.b*Ps(i,pos(i,j))+p.Cmax).*p.eps*p.Cmax-p.M;
 m=p.kl.*I(pos(i,j))+p.m0;
 
 % Survival chance
@@ -107,7 +107,7 @@ if R(i+1,j)<0.001
 end
     
 % Movements    
-Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.5*p.DeltaT)^(1/2);%-p.c*dwdz(i)*p.DeltaT;
+Z(i+1,j)=Z(i,j)+(-1+2*rand())*(2*p.r^(-1)*p.Dc*p.DeltaT)^(1/2);%-p.c*dwdz(i)*p.DeltaT;
 if Z(i+1,j)>-1;
     Z(i+1,j)=-1;
 end

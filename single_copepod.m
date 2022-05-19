@@ -84,12 +84,12 @@ pos(i)=round(-Z(i));
 Dpos(i)=pos(i)+1;
 
 % Fitness proxy
-g0=p.b*Ps(i,pos(i))./(p.b*Ps(i,pos(i))+p.Cmax).*p.Cmax-p.M;
+g0=p.b*Ps(i,pos(i))./(p.b*Ps(i,pos(i))+p.Cmax).*p.eps*p.Cmax-p.M;
 m0=p.kl.*I(pos(i))+p.m0;
 w0=g0./m0';
 
 % 
-g0d=p.b*Ps(i,Dpos(i))./(p.b*Ps(i,Dpos(i))+p.Cmax).*p.Cmax-p.M;
+g0d=p.b*Ps(i,Dpos(i))./(p.b*Ps(i,Dpos(i))+p.Cmax).*p.eps*p.Cmax-p.M;
 m0d=p.kl.*I(Dpos(i))+p.m0;
 w0d=g0d./m0d';
 
@@ -109,7 +109,7 @@ if R(i+1)<0.001
 end
 
 % Movements
-Z(i+1)=Z(i)+(-1+2*rand())*(2*p.r^(-1)*p.D*0.1*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
+Z(i+1)=Z(i)+(-1+2*rand())*(2*p.r^(-1)*p.Dc*p.DeltaT)^(1/2)-p.c*dwdz(i)*p.DeltaT;
 if Z(i+1)>-1;
     Z(i+1)=-1;
 end
