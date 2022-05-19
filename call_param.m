@@ -1,6 +1,7 @@
 function p=call_param()
 
-% 1) Parameters:
+%% Parameters for project 1
+
 p.u= 0.96; %sinking speed [m/day]
 p.D= 10;%diffusion rate [m^2/day] 
 p.depth= 100; %depth [m]
@@ -21,7 +22,8 @@ p.Hn=0.04; %Half satuaration nutrients growth [mmol N/(m^3)]
 p.tau=0.1; %1/d  remineralization
 p.w=5; %sinking speed of detritus m/d
 
-% Parameters for project 2
+%% Parameters for project 2
+
 p.r=1/3; %Randomization parameter [unitless]
 p.c=10; %coefficient expressing the magnitude of 
 %impact the fitness gradient has on movement [unitless]
@@ -30,6 +32,7 @@ p.Cmax=1.1; %max comsumption [(cell/m^3)/day]
 p.eps=0.9; %consumption efficiency [1/(cell/m^3)]
 p.m0=0.1; %Baseline mortality [1/day]
 p.kl=0.004; %predation pr light pr day [1/((mumol photons/(m^2s))*day)]
+p.Dc=10 %diffusion rate og copepods [m^2/day] 
 
 
 p.M=p.Cmax*0.1; %Matabolic rate [1/day]
