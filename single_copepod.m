@@ -8,6 +8,7 @@ clc
 %% 1) Parameters and initial condidtions
 %Call function: "call_param"
 p=call_param()
+p.kl=0.004
 
 %2) tThe grid
 p.dz=p.depth/p.n; %width of seciton
