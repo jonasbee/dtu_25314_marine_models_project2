@@ -31,7 +31,7 @@ p.b=0.1e-8; %Encounter rate [1/day]
 p.Cmax=1.1; %max comsumption [(cell/m^3)/day]
 p.eps=0.9; %consumption efficiency [1/(cell/m^3)]
 p.m0=0.1; %Baseline mortality [1/day]
-p.kl=0.0008; %predation pr light pr day [1/((mumol photons/(m^2s))*day)]
+p.kl=0.0013; %predation pr light pr day [1/((mumol photons/(m^2s))*day)]
 p.Dc=5 %diffusion rate og copepods [m^2/day] 
 
 
